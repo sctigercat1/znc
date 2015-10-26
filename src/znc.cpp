@@ -120,15 +120,14 @@ CString CZNC::GetTag(bool bIncludeVersion, bool bHTML) {
 	if (!Get().m_bHideVersion) {
 		bIncludeVersion = true;
 	}
-	CString sAddress = bHTML ? "<a href=\"http://znc.in\">http://znc.in</a>" : "http://znc.in";
 
 	if (!bIncludeVersion) {
-		return "ZNC - " + sAddress;
+		return "JumbleBNC";
 	}
 
 	CString sVersion = GetVersion();
 
-	return "ZNC " + sVersion + " - " + sAddress;
+	return "JumbleBNC " + sVersion;
 }
 
 CString CZNC::GetCompileOptionsString() {
