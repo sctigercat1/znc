@@ -18,25 +18,35 @@
 #include <znc/User.h>
 
 class CNotifyConnectMod : public CModule {
-public:
-	MODCONSTRUCTOR(CNotifyConnectMod) {}
+  public:
+    MODCONSTRUCTOR(CNotifyConnectMod) {}
 
-	void OnClientLogin() override {
-		SendAdmins(GetUser()->GetUserName() + " attached (from " + GetClient()->GetRemoteIP() + ")");
-	}
+    void OnClientLogin() override { NotifyAdmins("attached"); }
 
-	void OnClientDisconnect() override {
-		SendAdmins(GetUser()->GetUserName() + " detached (from " + GetClient()->GetRemoteIP() + ")");
-	}
+    void OnClientDisconnect() override { NotifyAdmins("detached"); }
 
-private:
-	void SendAdmins(const CString &msg) {
-		CZNC::Get().Broadcast(msg, true, nullptr, GetClient());
-	}
+  private:
+    void SendAdmins(const CString& msg) {
+        CZNC::Get().Broadcast(msg, true, nullptr, GetClient());
+    }
+
+    void NotifyAdmins(const CString& event) {
+        CString client = GetUser()->GetUserName();
+        if (GetClient()->GetIdentifier() != "") {
+            client += "@";
+            client += GetClient()->GetIdentifier();
+        }
+        CString ip = GetClient()->GetRemoteIP();
+
+        SendAdmins(client + " " + event + " (from " + ip + ")");
+    }
 };
 
-template<> void TModInfo<CNotifyConnectMod>(CModInfo& Info) {
-	Info.SetWikiPage("notify_connect");
+template <>
+void TModInfo<CNotifyConnectMod>(CModInfo& Info) {
+    Info.SetWikiPage("notify_connect");
 }
 
-GLOBALMODULEDEFS(CNotifyConnectMod, "Notifies all admin users when a client connects or disconnects.")
+GLOBALMODULEDEFS(
+    CNotifyConnectMod,
+    "Notifies all admin users when a client connects or disconnects.")

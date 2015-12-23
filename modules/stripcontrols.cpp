@@ -17,43 +17,48 @@
 #include <znc/Modules.h>
 
 class CStripControlsMod : public CModule {
-public:
-	MODCONSTRUCTOR(CStripControlsMod) {}
+  public:
+    MODCONSTRUCTOR(CStripControlsMod) {}
 
-	EModRet OnPrivCTCP(CNick& Nick, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnPrivCTCP(CNick& Nick, CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 
-	EModRet OnChanCTCP(CNick& Nick, CChan& Channel, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnChanCTCP(CNick& Nick, CChan& Channel,
+                       CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 
-	EModRet OnPrivNotice(CNick& Nick, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnPrivNotice(CNick& Nick, CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 
-	EModRet OnChanNotice(CNick& Nick, CChan& Channel, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnChanNotice(CNick& Nick, CChan& Channel,
+                         CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 
-	EModRet OnPrivMsg(CNick& Nick, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnPrivMsg(CNick& Nick, CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 
-	EModRet OnChanMsg(CNick& Nick, CChan& Channel, CString& sMessage) override {
-		sMessage.StripControls();
-		return CONTINUE;
-	}
+    EModRet OnChanMsg(CNick& Nick, CChan& Channel, CString& sMessage) override {
+        sMessage.StripControls();
+        return CONTINUE;
+    }
 };
 
-template<> void TModInfo<CStripControlsMod>(CModInfo& Info) {
-	Info.SetWikiPage("stripcontrols");
-	Info.AddType(CModInfo::UserModule);
+template <>
+void TModInfo<CStripControlsMod>(CModInfo& Info) {
+    Info.SetWikiPage("stripcontrols");
+    Info.AddType(CModInfo::UserModule);
 }
 
-NETWORKMODULEDEFS(CStripControlsMod, "Strips control codes (Colors, Bold, ..) from channel and private messages.")
+NETWORKMODULEDEFS(CStripControlsMod,
+                  "Strips control codes (Colors, Bold, ..) from channel and "
+                  "private messages.")
